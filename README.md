@@ -4,7 +4,7 @@ Controlador de Carga com Arduino UNO para uso num Inversor de Tensão.
 O Equipamento foi criado por mim, Judenilson, a partir da idéia de um amigo chamado Dennis Sousa, diante de uma necessidade de controlar o uso de um Inversor de tensão em sua residência.
 Dennis já apareceu com vários shields facilitando o desenvolvimento. 
 
-Segue lista do material usado:
+### Lista do material usado:
 
 - Arduino UNO;
 - Módulo Relé de 2 canais, 5V - 220V;
@@ -17,3 +17,8 @@ Segue lista do material usado:
 - 3 resistores 10k;
 - 3 Capacitores cerâmico de 100nF;
 - Fios;
+
+### Esquema desenhado no [Fritzing](https://www.fritzing.org)
+
+![](img/ControladorDeCarga_bb.png)
+![](img/ControladorDeCarga_esquematico.png)
