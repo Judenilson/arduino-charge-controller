@@ -1,8 +1,12 @@
 # Controlador de Carga
 Controlador de Carga com Arduino UNO para uso num Inversor de Tensão.
+![](img/produto.jpg)
 
-O Equipamento foi criado por mim, Judenilson, a partir da idéia de um amigo chamado Dennis Sousa, diante de uma necessidade de controlar o uso de um Inversor de tensão em sua residência.
-Dennis já apareceu com vários shields facilitando o desenvolvimento. 
+Veja funcionando no [Youtube](https://youtu.be/4k4Bwcqm5so)
+
+O Equipamento foi criado por mim, Judenilson Araujo, a partir da idéia de um amigo chamado Dennis Sousa, diante da necessidade de controlar o uso de um Inversor de tensão em sua residência, definindo horários específicos para ligar e desligar, bem como, a faixa de tensão específica para funcionamento das baterias.
+Dennis já apareceu com vários shields facilitando o desenvolvimento, só tive que organizar numa caixa de montagem, inserir alguns botões e programar. É simples porém funcional e vai ajudar meu amigo com seu problema.
+Caso queira copiar o projeto, fique a vontade. Se fizer alguma alteração no código que vai melhorá-lo, por favor, compartilhe conosco.
 
 ### Lista do material usado:
 
