@@ -25,4 +25,4 @@ Caso queira copiar o projeto, fique a vontade. Se fizer alguma alteração no c�
 ### Esquema desenhado no [Fritzing](https://www.fritzing.org)
 
 ![](img/ControladorDeCarga_bb.png)
-![](img/ControladorDeCarga_Esquematico.png)
+![](img/ControladorDeCarga_esquematico.png)
