@@ -36,6 +36,7 @@ int timer[8]={23, 59, 2, 2, 3, 3, 4, 4}; // (16 bytes)
 float tensaoRefInf = 12.15f; // (4 bytes) Variável de referência inferior para desarme do sistema.
 float tensaoRefSup = 13.05f; // (4 bytes) Variável de referência superior para possibilitar rearme do sistema.
 float rearme = true; // Variável para controlar se o sistema ja descarregou as baterias.
+uint32_t timer_tensao_baixa = 0;
 // A EEPROM vai armazenar 26 Bytes, no Arduino UNO seu tamanho disponível é de 1KB, ou seja, dá q sobra!
 
 // Declarações usadas nos botões ----------------------------------------------------------------
@@ -56,8 +57,8 @@ void setup(){
 	// as definições dos relés vem no primeiro instante para que ele não tenha tempo de acionamento, antes da saida ficar HIGH. 
 	pinMode(releUm, OUTPUT);
 	pinMode(releDois, OUTPUT);	
-  digitalWrite(releUm, estadoReleA);
-  digitalWrite(releDois, estadoReleB);
+	digitalWrite(releUm, estadoReleA);
+	digitalWrite(releDois, estadoReleB);
 
 	Serial.begin(115200);
 	delay(1000);
@@ -171,7 +172,7 @@ void loop(){
 
 	if (digitalRead(btMenu)){
 		menu++;
-		if (menu > 12){
+		if (menu > 0){
 			menu = 0;
 		}
 	}
@@ -423,15 +424,25 @@ void ajustarDataHora(){
 	delay(1000);
 }
 
-void reles(){
-	if (tensaoMedida < tensaoRefInf){	// Se a tensão estiver abaixo do limite inferior, desligará os relés.
-		estadoReleA = true;
-		estadoReleB = true;
-  	digitalWrite(releUm, estadoReleA);
-  	digitalWrite(releDois, estadoReleB);
-  	rearme = false;	// Trava para que o sistema só volte a rearmar após atingir o limite superior de tensão.
-  	return;
+void reles(){  
+	DateTime time_now = rtc.now(); // Criando um ogjeto para pegar o tempo do RTC no momento.
+	uint32_t timeStamp = time_now.unixtime(); // Pegando o tempo no formato Unix.
+	if (tensaoMedida < tensaoRefInf){	// Se a tensão estiver abaixo do limite inferior, desligará os relés.		
+		if (timeStamp - timer_tensao_baixa >= 10){	
+			// Se tiver passado 10s desde que a queda da tensão tenha ficado abaixo da referência, ele desarma os relés.
+			// Isso serve para que evite o desligamento inadequado do inversor, quando a tensão flutuar abaixo da referência devido uma carga inicial,
+			// que após estabilizada fique acima do esperado na referência de tensão de corte.
+			estadoReleA = true;
+			estadoReleB = true;
+	  	digitalWrite(releUm, estadoReleA);
+	  	digitalWrite(releDois, estadoReleB);
+	  	rearme = false;	// Trava para que o sistema só volte a rearmar após atingir o limite superior de tensão.
+	  	return;
+	  }
+	}	else {
+		timer_tensao_baixa = timeStamp; // Caso a tensão não esteja abaixo do corte, o timer é atualizado com o "tempo agora". 
 	}
+
 	if (tensaoMedida >= tensaoRefSup){		// Assim q o sistema detectar a tensão no limite superior vai rearmar.
 		rearme = true;
 	}
