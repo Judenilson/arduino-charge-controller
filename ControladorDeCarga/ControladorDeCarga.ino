@@ -172,7 +172,7 @@ void loop(){
 
 	if (digitalRead(btMenu)){
 		menu++;
-		if (menu > 0){
+		if (menu > 12){
 			menu = 0;
 		}
 	}
